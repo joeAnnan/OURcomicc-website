@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NexusCon 2025 — Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Roboto+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000000;--dark:#0a0a0a;--card:#111111;--white:#fff;--green:#00e676;--blue:#2979ff;--green-dark:#00b248;--blue-dark:#1a52cc;--gray:#222;--muted:#888;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Roboto',sans-serif;background:#000;color:var(--white);overflow-x:hidden;}
+nav{position:fixed;top:0;width:100%;z-index:900;background:rgba(0,0,0,0.92);backdrop-filter:blur(20px);border-bottom:2px solid var(--green);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:76px;transition:background .3s;flex-wrap: wrap;}
+.nav-logo{font-family:'Roboto Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--white);letter-spacing:3px;text-decoration:none;}.nav-logo span{color:var(--green);}
+.nav-links{display:block !important;gap:8px;align-items:center;}
+.nav-links a{color:var(--white);text-decoration:none;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:4px;transition:background .2s;}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,0.1);}
+.btn-blue{background:var(--blue);color:var(--white)!important;border:none;padding:18px 44px;font-size:20px;font-family:'Roboto',sans-serif;font-weight:700;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block;letter-spacing:1px;transition:background .2s,transform .15s,box-shadow .2s;}
+.btn-blue:hover{background:var(--blue-dark);transform:translateY(-3px);box-shadow:0 12px 40px rgba(41,121,255,0.45);}
+.btn-green{background:var(--green);color:var(--white)!important;border:none;padding:18px 44px;font-size:20px;font-family:'Roboto',sans-serif;font-weight:700;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block;letter-spacing:1px;transition:background .2s,transform .15s,box-shadow .2s;}
+.btn-green:hover{background:var(--green-dark);transform:translateY(-3px);}
+.nav-btn{padding:10px 22px!important;font-size:14px!important;}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+/* GALLERY HEADER */
+#gallery-header{padding:140px 48px 60px;background:#000;text-align:center;}
+.eyebrow{font-size:16px;letter-spacing:5px;text-transform:uppercase;font-weight:700;margin-bottom:16px;display:block;}
+.eyebrow.g{color:var(--green);}.eyebrow.b{color:var(--blue);}
+.g-title{font-family:'Roboto Condensed',sans-serif;font-size:clamp(60px,10vw,130px);font-weight:900;color:var(--white);line-height:0.9;letter-spacing:-3px;margin-bottom:20px;}
+.g-desc{font-size:clamp(18px,2vw,24px);color:rgba(255,255,255,0.6);max-width:700px;margin:0 auto 40px;line-height:1.7;}
+/* FILTERS */
+.gallery-filters{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:60px;}
+.filter-btn{background:transparent;border:2px solid var(--gray);color:var(--muted);padding:12px 28px;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:1px;transition:all .2s;text-transform:uppercase;}
+.filter-btn:hover,.filter-btn.active{border-color:var(--green);color:var(--white);background:rgba(0,230,118,0.1);}
+/* PINTEREST MASONRY */
+#pin-grid{padding:0 16px 80px;background:#000;}
+.masonry{column-count:4;column-gap:12px;}
+@media(max-width:1200px){.masonry{column-count:3;}}
+@media(max-width:768px){.masonry{column-count:2;}}
+@media(max-width:480px){.masonry{column-count:1;}}
+.pin{break-inside:avoid;margin-bottom:12px;border-radius:18px;overflow:hidden;position:relative;cursor:pointer;background:#111;transition:transform .3s;}
+.pin:hover{transform:scale(1.02);}
+.pin img,.pin video{width:100%;display:block;border-radius:18px;}
+.pin video{object-fit:cover;}
+.pin-overlay{position:absolute;inset:0;border-radius:18px;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.1) 50%,transparent 100%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;}
+.pin:hover .pin-overlay{opacity:1;}
+.pin-title{font-family:'Roboto Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.2;}
+.pin-sub{font-size:14px;color:var(--muted);}
+.pin-year{position:absolute;top:14px;right:14px;background:rgba(41,121,255,0.85);color:var(--white);font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;z-index:2;}
+.pin-cat{position:absolute;top:14px;left:14px;background:rgba(0,230,118,0.85);color:#000;font-size:12px;font-weight:900;letter-spacing:2px;padding:4px 10px;border-radius:4px;z-index:2;text-transform:uppercase;}
+.pin-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:rgba(41,121,255,0.9);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .3s;z-index:3;}
+/* video pins always autoplay so no play button needed */
+/* COLOR TILES for image placeholders */
+.tile{width:100%;display:flex;align-items:center;justify-content:center;font-size:70px;border-radius:18px;}
+.t-tall{aspect-ratio:2/3;}
+.t-wide{aspect-ratio:4/3;}
+.t-sq{aspect-ratio:1;}
+.t-port{aspect-ratio:3/4;}
+.t-land{aspect-ratio:16/9;}
+.c1{background:linear-gradient(145deg,#0d1a35,#1a3a6a,#0a2240);}
+.c2{background:linear-gradient(145deg,#0a1a10,#1a4a20,#0a2810);}
+.c3{background:linear-gradient(145deg,#1a0a20,#3a1055,#200a30);}
+.c4{background:linear-gradient(145deg,#1a1000,#443010,#281800);}
+.c5{background:linear-gradient(145deg,#001a1a,#004045,#002030);}
+.c6{background:linear-gradient(145deg,#280010,#581025,#380010);}
+.c7{background:linear-gradient(145deg,#001018,#002848,#000e28);}
+.c8{background:linear-gradient(145deg,#181010,#342222,#201010);}
+.c9{background:linear-gradient(145deg,#001a0a,#004020,#001810);}
+.c10{background:linear-gradient(145deg,#0a001a,#240048,#100028);}
+.c11{background:linear-gradient(145deg,#200800,#482010,#2c0c00);}
+.c12{background:linear-gradient(145deg,#000818,#001c48,#000428);}
+.c13{background:linear-gradient(145deg,#0a1a00,#2c3c00,#141e00);}
+.c14{background:linear-gradient(145deg,#1c0004,#480010,#2c0008);}
+.c15{background:linear-gradient(145deg,#00121a,#003040,#000e28);}
+/* VIDEO EMBED TILES */
+.video-pin{position:relative;border-radius:18px;overflow:hidden;break-inside:avoid;margin-bottom:12px;}
+.video-pin video,.video-pin iframe{width:100%;display:block;border-radius:18px;}
+.video-badge{position:absolute;top:14px;left:14px;background:rgba(220,40,40,0.9);color:var(--white);font-size:12px;font-weight:900;letter-spacing:2px;padding:4px 10px;border-radius:4px;z-index:2;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+.video-badge::before{content:'▶';font-size:10px;}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.97);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.lightbox.open{opacity:1;pointer-events:all;}
+.lightbox-inner{background:#111;border-radius:22px;border:2px solid var(--blue);max-width:700px;width:90%;padding:60px;text-align:center;transform:scale(0.85);transition:transform .3s;position:relative;}
+.lightbox.open .lightbox-inner{transform:scale(1);}
+.lightbox-close{position:absolute;top:20px;right:20px;background:var(--gray);border:none;color:var(--white);width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;transition:background .2s;}
+.lightbox-close:hover{background:var(--blue);}
+.lb-emoji{font-size:90px;margin-bottom:20px;display:block;}
+.lb-title{font-family:'Roboto Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--white);margin-bottom:14px;}
+.lb-desc{font-size:19px;color:var(--muted);line-height:1.8;}
+footer{background:#000;border-top:1px solid var(--gray);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-copy{color:var(--muted);font-size:15px;}
+.footer-nav a{color:var(--muted);text-decoration:none;font-size:15px;margin-left:20px;transition:color .2s;}
+.footer-nav a:hover{color:var(--green);}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px;}
+@media(max-width:768px){nav{padding:0 20px;}.nav-links{display:none;}#gallery-header{padding:120px 24px 50px;}}
+</style>
+</head>
+<body>
+<nav id="main-nav">
+  <a class="nav-logo" href="index.html">CYBER<span>TOPIA</span></a>
+  <div class="nav-links">
+    <a href="./index.html">Home</a>
+    <a href="./nexuscon_comics.html">Comics</a>
+    <a href="./nexuscon_gallery.html" class="active">Gallery</a>
+    <a href="./nexuscon_board.html">Board</a>
+    <a href="./nexuscon_register.html" class="btn-blue nav-btn">Register Now</a>
+  </div>
+</nav>
+
+<div id="gallery-header" class="reveal">
+  <span class="eyebrow g">📸 Photo &amp; Video</span>
+  <h1 class="g-title">The Gallery</h1>
+  <p class="g-desc">Two decades of unforgettable moments — cosplay champions, opening spectacles, artist masterpieces, and the people that make Cybertopia the greatest show on Earth.</p>
+  <div class="gallery-filters">
+    <button class="filter-btn active" onclick="filterPins('all',this)">All</button>
+    
+    <button class="filter-btn" onclick="filterPins('panels',this)">Panels</button>
+    <button class="filter-btn" onclick="filterPins('art',this)">Artist Alley</button>
+    <button class="filter-btn" onclick="filterPins('events',this)">Events</button>
+    <button class="filter-btn" onclick="filterPins('gaming',this)">Gaming</button>
+    <button class="filter-btn" onclick="filterPins('video',this)">🎬 Videos</button>
+  </div>
+</div>
+
+<div id="pin-grid">
+  <div class="masonry" id="masonry">
+
+    
+  
+
+    
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Live Highlight</div>
+      <video autoplay muted loop controls style="aspect-ratio:9/16;object-fit:cover;max-height:520px;border-radius:18px;" poster="./building.png">
+        <source src="./Videos/event trailer.mp4"  type="video/mp4">
+      </video>
+    </div>
+
+   <div class="pin" data-cat="events" onclick="openLB('./images/opening-night.jpg','Opening Night Spectacle 2024','The 2024 opening ceremony drew 40,000 attendees for a 20-minute pyrotechnics display, drone light show, and live orchestral performance.')">
+
+  <div class="tile t-sq c2">
+    <img src="./pictures/event flyer.jpg" alt="Opening Night Spectacle">
+  </div>
+      <div class="pin-year">2024</div><div class="pin-cat">Events</div>
+      <div class="pin-overlay"><div class="pin-title">Opening Night Spectacle</div><div class="pin-sub">Drone Light Show · 40,000 Crowd</div></div>
+    </div>
+
+    <div class="pin" data-cat="art" onclick="openLB('🎨','Artist Alley Grand Hall 2024','Over 350 independent artists filled the Grand Hall with original prints, live commissions, and debut graphic novel launches. The 2024 edition sold out every artist table within 2 hours of doors opening.')">
+      <div class="tile t-port c3"><span>🎨</span></div>
+      <div class="pin-year">2024</div><div class="pin-cat">Art</div>
+      <div class="pin-overlay"><div class="pin-title">Artist Alley Grand Hall</div><div class="pin-sub">350+ Independent Artists</div></div>
+    </div>
+
+    <!-- VIDEO 2 -->
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Cosplay Reel</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:16/9;object-fit:cover;border-radius:18px;" poster="./building.png">
+        <source src="./Videos/event trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+
+   
+
+    <div class="pin" data-cat="panels" onclick="openLB('🎤','Marvel Universe Panel 2024','The sold-out Marvel panel featured surprise appearances from three A-list actors, two new film announcements, and an exclusive 4-minute trailer shown for the very first time anywhere in the world.')">
+      <div class="tile t-tall c5"><span>🎤</span></div>
+      <div class="pin-year">2024</div><div class="pin-cat">Panels</div>
+      <div class="pin-overlay"><div class="pin-title">Marvel Universe Panel</div><div class="pin-sub">Surprise Reveals · Hall D</div></div>
+    </div>
+
+    <div class="pin" data-cat="gaming" onclick="openLB('🎮','Gaming Tournament Finals 2024','The grand finale saw 4,000 spectators pack the gaming arena. The championship match lasted 4 hours and was streamed live to 2 million viewers worldwide — the most-watched NexusCon stream ever.')">
+      <div class="tile t-sq c13">
+  <img src="./pictures/event flyer.jpg" alt="Retro Games Hall 2024">
+</div>
+      <div class="pin-year">2024</div><div class="pin-cat">Gaming</div>
+      <div class="pin-overlay"><div class="pin-title">Gaming Tournament Finals</div><div class="pin-sub">4,000 Live Spectators</div></div>
+    </div>
+
+    <!-- VIDEO 3 -->
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Panel Highlight</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:4/3;object-fit:cover;border-radius:18px;" poster="https://images.unsplash.com/photo-1560169897-fc0cdbdfa4d5?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="pin" data-cat="art" onclick="openLB('🖌️','Live Mural Commission 2023','Brazilian muralist Paulo Dias created a 40-foot live mural over four days on the convention centre exterior wall. The work depicting NexusCon history was donated to the city and unveiled at closing.')">
+      <div class="tile t-wide c9"><span>🖌️</span></div>
+      <div class="pin-year">2023</div><div class="pin-cat">Art</div>
+      <div class="pin-overlay"><div class="pin-title">Live Mural Commission</div><div class="pin-sub">Paulo Dias · 40ft Exterior Mural</div></div>
+    </div>
+
+   
+
+    <div class="pin" data-cat="events" onclick="openLB('./building.png','Opening Night Spectacle 2024','The 2024 opening ceremony drew 40,000 attendees for a 20-minute pyrotechnics display, drone light show, and live orchestral performance.')">
+
+  <div class="tile t-sq c2">
+    <img src="./pictures/event flyer.jpg" alt="Opening Night Spectacle">
+  </div>
+      <div class="pin-year">2023</div><div class="pin-cat">Events</div>
+      <div class="pin-overlay"><div class="pin-title">Closing Night Gala</div><div class="pin-sub">3,500 VIP Guests · Live Concert</div></div>
+    </div>
+
+ 
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Gaming Reel</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:9/16;object-fit:cover;max-height:500px;border-radius:18px;" poster="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="pin" data-cat="panels" onclick="openLB('📚','Comics Legends Spotlight 2022','Five living legends of the comic art form on the same stage for the first time in 30 years. The resulting two-hour conversation was later published as a celebrated 250-page retrospective book.')">
+      <div class="tile t-sq c12"><span>📚</span></div>
+      <div class="pin-year">2022</div><div class="pin-cat">Panels</div>
+      <div class="pin-overlay"><div class="pin-title">Comics Legends Spotlight</div><div class="pin-sub">Five Legends · One Stage</div></div>
+    </div>
+
+    <div class="pin" data-cat="art" onclick="openLB('🎭','Sculpture Exhibition 2023','28 large-scale works from international sculptors working in comic and pop-art styles. Works ranged from 3-foot bronze busts to 20-foot fibreglass superhero installations in the central atrium.')">
+      <div class="tile t-wide c11"><span>🎭</span></div>
+      <div class="pin-year">2023</div><div class="pin-cat">Art</div>
+      <div class="pin-overlay"><div class="pin-title">Sculpture Exhibition</div><div class="pin-sub">28 Large-Scale Works</div></div>
+    </div>
+
+    <div class="pin" data-cat="gaming" onclick="openLB('🕹️','Retro Games Hall 2024','500+ original arcade machines and classic consoles from the 1970s to 2000s. All games were free to play — the queues stretched four halls long and the energy was absolutely electric.')">
+      <div class="tile t-sq c13">
+  <img src="./pictures/event flyer.jpg" alt="Retro Games Hall 2024">
+</div>
+      <div class="pin-year">2024</div><div class="pin-cat">Gaming</div>
+      <div class="pin-overlay"><div class="pin-title">Retro Games Hall</div><div class="pin-sub">500+ Classic Arcade Machines</div></div>
+    </div>
+
+  
+
+    
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Opening Ceremony</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:16/9;object-fit:cover;border-radius:18px;" poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+  
+
+    <div class="pin" data-cat="panels" onclick="openLB('🎬','Exclusive Film Screenings 2024','12 world premieres over four days — from major studio releases to acclaimed indie animated features. Every single screening sold out within minutes of registration opening.')">
+      <div class="tile t-sq c10"><span>🎬</span></div>
+      <div class="pin-year">2024</div><div class="pin-cat">Panels</div>
+      <div class="pin-overlay"><div class="pin-title">Exclusive Film Screenings</div><div class="pin-sub">12 World Premieres</div></div>
+    </div>
+
+    <div class="pin" data-cat="art" onclick="openLB('🖼️','Digital Art Showcase 2023','The first-ever NexusCon Digital Art Showcase displayed 80 works by digital illustrators on giant LED canvases throughout the venue. Artists participated in live digital painting sessions watched by thousands.')">
+      <div class="tile t-port c1"><span>🖼️</span></div>
+      <div class="pin-year">2023</div><div class="pin-cat">Art</div>
+      <div class="pin-overlay"><div class="pin-title">Digital Art Showcase</div><div class="pin-sub">80 Works · LED Canvases</div></div>
+    </div>
+
+    
+    <div class="video-pin" data-cat="video">
+      <div class="video-badge">Artist Timelapse</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:1;object-fit:cover;border-radius:18px;" poster="https://images.unsplash.com/photo-1588497859490-85d1c17db96d?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+
+    <div class="pin" data-cat="gaming" onclick="openLB('🏆','Esports Championship 2024','NexusCon hosted its first official Esports Championship in partnership with three major game publishers. The prize pool reached $50,000 across six titles, drawing professional players from 22 countries.')">
+     <div class="tile t-sq c13">
+  <img src="./pictures/event flyer.jpg" alt="Retro Games Hall 2024">
+</div>
+      <div class="pin-year">2024</div><div class="pin-cat">Gaming</div>
+      <div class="pin-overlay"><div class="pin-title">Esports Championship</div><div class="pin-sub">$50K Prize Pool · 22 Countries</div></div>
+    </div>
+
+      <div class="video-pin" data-cat="video">
+      <div class="video-badge">Gaming Reel</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:9/16;object-fit:cover;max-height:500px;border-radius:18px;" poster="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="pin" data-cat="gaming" onclick="openLB('🏆','Esports Championship 2024','NexusCon hosted its first official Esports Championship in partnership with three major game publishers. The prize pool reached $50,000 across six titles, drawing professional players from 22 countries.')">
+     <div class="tile t-sq c13">
+  <img src="./pictures/event flyer.jpg" alt="Retro Games Hall 2024">
+</div>
+      <div class="pin-year">2024</div><div class="pin-cat">Gaming</div>
+      <div class="pin-overlay"><div class="pin-title">Esports Championship</div><div class="pin-sub">$50K Prize Pool · 22 Countries</div></div>
+    </div>
+
+      <div class="pin" data-cat="events" onclick="openLB('./building.png','Opening Night Spectacle 2024','The 2024 opening ceremony drew 40,000 attendees for a 20-minute pyrotechnics display, drone light show, and live orchestral performance.')">
+
+  <div class="tile t-sq c2">
+    <img src="./pictures/event flyer.jpg" alt="Opening Night Spectacle">
+  </div>
+      <div class="pin-year">2023</div><div class="pin-cat">Events</div>
+      <div class="pin-overlay"><div class="pin-title">Closing Night Gala</div><div class="pin-sub">3,500 VIP Guests · Live Concert</div></div>
+    </div>
+
+      <div class="video-pin" data-cat="video">
+      <div class="video-badge">Gaming Reel</div>
+      <video autoplay muted loop playsinline style="aspect-ratio:9/16;object-fit:cover;max-height:500px;border-radius:18px;" poster="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=600&q=80">
+        <source src="./Videos/flyer vid.mp4" type="video/mp4">
+      </video>
+    </div>
+
+     <div class="video-pin" data-cat="video">
+      <div class="video-badge">Live Highlight</div>
+      <video autoplay muted loop controls style="aspect-ratio:9/16;object-fit:cover;max-height:520px;border-radius:18px;" poster="./building.png">
+        <source src="./Videos/event trailer.mp4"  type="video/mp4">
+      </video>
+    </div>
+
+
+  </div>
+</div>
+
+
+<div class="lightbox" id="lightbox" onclick="closeLB(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLB()">✕</button>
+    <span class="lb-emoji" id="lb-emoji">🦸</span>
+    <div class="lb-title" id="lb-title">Title</div>
+    <div class="lb-desc" id="lb-desc">Description</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2025 Cybertopia. All rights reserved.</div>
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="comics.html">Comics</a>
+    <a href="board.html">Board</a>
+    <a href="register.html">Register</a>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('main-nav').style.background=window.scrollY>80?'rgba(0,0,0,1)':'rgba(0,0,0,0.92)';});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%6)*.06+'s';obs.observe(el);});
+// FILTER
+function filterPins(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#masonry > .pin, #masonry > .video-pin').forEach(item=>{
+    const show=cat==='all'||item.dataset.cat===cat;
+    item.style.transition='opacity .3s';
+    if(show){item.style.display='';setTimeout(()=>item.style.opacity='1',10);}
+    else{item.style.opacity='0';setTimeout(()=>item.style.display='none',300);}
+  });
+}
+// LIGHTBOX
+function openLB(emoji,title,desc){document.getElementById('lb-emoji').textContent=emoji;document.getElementById('lb-title').textContent=title;document.getElementById('lb-desc').textContent=desc;document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+function closeLB(e){if(!e||e.target===document.getElementById('lightbox')||e.currentTarget.tagName==='BUTTON'){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}}
+// Ensure all videos play
+document.querySelectorAll('video').forEach(v=>{v.play().catch(()=>{});});
+window.addEventListener('click',()=>{document.querySelectorAll('video').forEach(v=>{if(v.paused)v.play().catch(()=>{});});},{once:true});
+</script>
+</body>
+</html>
